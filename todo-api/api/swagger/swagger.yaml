@@ -80,6 +80,27 @@ paths:
         204:
           description: "todo deleted"
       x-swagger-router-controller: "DeleteTodoById"
+    put:
+      description: "Update a single to by id"
+      operationId: "UpdateTodoById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id of the todo being updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "updated_todo"
+        in: "body"
+        description: "the updated todo"
+        required: true
+        schema:
+          $ref: "#/definitions/Todo"
+      responses:
+        200:
+          description: "Todo updated"
+        400:
+          description: "Yikes! An error!"
   /swagger:
       x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
