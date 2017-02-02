@@ -2,6 +2,6 @@
 
 var Elasticsearch = require('elasticsearch');
 var client = new Elasticsearch.Client({
-    host: 'localhost:9200',
+    host: 'localhost:10010',
     log: 'error'
 })
