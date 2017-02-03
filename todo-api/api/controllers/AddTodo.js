@@ -3,7 +3,7 @@
 // var client = require('../helpers/es');
 var Elasticsearch = require('elasticsearch');
 var client = new Elasticsearch.Client({
-    host: 'localhost:10010',
+    host: 'localhost:9200',
     log: 'error'
 });
 
@@ -17,15 +17,14 @@ function AddTodo(req, res) {
         type: 'todo',
         id: req.swagger.params.todo.value.todo_id,
         body: req.swagger.params.todo.value
-    }).then(function(error, response) {
+    }).then(function(response) {
         res.header('Content-Type', 'application/json');
-        if (error) {
-            console.log(error);
-            res.statusCode = 409;
-            res.end(JSON.stringify(error));
-        } else {
-            console.log(`Todo ${req.swagger.params.todo.value.todo_id} added to Elasticsearch`);
-            res.end();
-        }
+        console.log(`Todo ${req.swagger.params.todo.value.todo_id} added to Elasticsearch`);
+        res.end();
+    }, function(error) {
+        res.header('Content-Type', 'application/json');
+        console.log(error);
+        res.statusCode = 409;
+        res.end(JSON.stringify(error));
     });
 }
