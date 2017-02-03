@@ -18,10 +18,14 @@ function AddTodo(req, res) {
         id: req.swagger.params.todo.value.todo_id,
         body: req.swagger.params.todo.value
     }).then(function(error, response) {
+        res.header('Content-Type', 'application/json');
         if (error) {
             console.log(error);
             res.statusCode = 409;
             res.end(JSON.stringify(error));
+        } else {
+            console.log(`Todo ${req.swagger.params.todo.value.todo_id} added to Elasticsearch`);
+            res.end();
         }
     });
 }
