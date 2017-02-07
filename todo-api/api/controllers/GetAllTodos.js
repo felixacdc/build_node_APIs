@@ -6,12 +6,14 @@ var client = new Elasticsearch.Client({
     host: 'localhost:9200',
     log: 'error'
 });
+var monitor = require("../helpers/monitor");
 
 module.exports = {
     GetAllTodos: GetAllTodos
 }
 
 function GetAllTodos(req, res) {
+    var start = monitor();
     client.search({
         index: 'todo',
         type: 'todo',
@@ -24,6 +26,7 @@ function GetAllTodos(req, res) {
         });
         res.header('Content-Type', 'application/json');
         res.end(JSON.stringify(results));
+        monitor(start, 'GetAllTodos');
     }, function(error) {
         res.end(JSON.stringify(error));
     });
